@@ -81,8 +81,7 @@ function startBot()
             //Error message ^
             if(sendToDS){
             channel = getChannel();
-            console.log(channel);
-            console.log(client.channels.cache.get(announcements.discordBot.channelID));
+           
                 
                 //Error message ^)
             }
