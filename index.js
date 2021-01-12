@@ -78,22 +78,13 @@ function startBot()
         
         //Executes when bot spawns
         bot.once('spawn', () => {
-            try{
-                if(sendToDS){
-                const channel = client.channels.cache.get(announcements.discordBot.channelID)
-                }
-            }catch(err){
-                console.log(`Something went wrong with your channel id.
-                Some things to make sure:
-                Make sure your bot is added to your server
-                Make sure your bot has permission to access the channel.
-                
-                Here's the error: 
-                `+err);
-                process.exit(1);
-            };
             //Error message ^
-            
+            if(sendToDS){
+            channel = getChannel();
+           
+                
+                //Error message ^)
+            }
             
             //Init mcData, pathfinder
             const mcData = require('minecraft-data')(bot.version);
@@ -185,8 +176,9 @@ function startBot()
             bot.on('whisper', (username, message) => {
                 if (username === bot.username) return
                 
+                var playerToFollow; 
                 try{
-                const playerToFollow = bot.players[username].entity
+                playerToFollow = bot.players[username].entity
                 
                 if (username === botOwner) {
                     switch (message) {
@@ -315,7 +307,7 @@ function startBot()
                     };
                 };
 
-                global.attackUser = attacker
+                global.attackUser = attacker;
             });
             //set the anti afk timeout
             setInterval(() => {
@@ -356,10 +348,10 @@ function startBot()
                     if (entity.type === 'mob' && entity.position.distanceTo(bot.entity.position) < 8 && entity.mobType !== 'Armor Stand') {
                         const mobFilter = e => e.type === 'mob' && e.position.distanceTo(bot.entity.position) < 8 && e.mobType !== 'Armor Stand'
                         
-                        
+                        var mob;
                         //get info about the closest mob
                         try{
-                        const mob = bot.nearestEntity(mobFilter);
+                        mob = bot.nearestEntity(mobFilter);
                         }catch(err){
                             console.log(`
                             An error occurred while attempting to get info to attack a mob.
@@ -371,8 +363,9 @@ function startBot()
                         }
                         //return if mob is undefined
                         if (!mob) return
+                        var pos;
                         try{
-                            const pos = mob.position
+                            pos = mob.position;
                             }catch(err){
                                 console.log(`
                                 An error occurred while attempting to get info to attack a mob.
@@ -426,6 +419,25 @@ function startBot()
 
                 return returnedEmbed
             };
+            function getChannel(){
+                
+            try{
+                let channelCheck = client.channels.cache.get(announcements.discordBot.channelID)
+                let channelid = channelCheck.id;
+                return channelCheck;
+               
+           }catch(err){
+               console.log(`Something went wrong with your channel id.
+               Some things to make sure:
+               Make sure your bot is added to your server
+               Make sure your bot has permission to access the channel.
+               
+               Here's the error: 
+               `+err);
+               process.exit(1);
+           };
+            }
         }); 
+        
     };
 };
