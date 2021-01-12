@@ -18,6 +18,13 @@
             "prefix" : "+ABot",
             "embedHexColor" : "#0000ff",
             "userIDToPing" :""
+        },
+
+        "richPresence" : {
+            "enable" : true,
+            "details" : "AFKing",
+            "state" : "Away From Keyboard",
+            "imageText" : "This is an AFKBot"
         }
     },
     
